@@ -33,7 +33,7 @@
             this.removeShip(ship);
         }
 
-        return ships.lenghts;
+        return ships.length;
     }
 
     addShot(){}
@@ -47,6 +47,6 @@
             this.removeShip(shot);
         }
 
-        return shots.lenghts;
+        return shots.length;
     }
 }
