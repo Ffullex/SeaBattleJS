@@ -7,6 +7,7 @@ class BattlefieldView extends Battlefield {
     polygon = null;    // хранилище выстрелов
 
     cells = [];
+
     constructor() {
         super();
         const root = document.createElement("div");
@@ -21,10 +22,6 @@ class BattlefieldView extends Battlefield {
         const polygon = document.createElement('div');
         polygon.classList.add("battlefield-polygon");
 
-/*        this.root = root;
-        this.table = table;
-        this.dock = dock;
-        this.polygon = polygon;*/
         Object.assign(this, { root, table, dock, polygon});
         root.append(table, dock, polygon)
 
@@ -32,7 +29,8 @@ class BattlefieldView extends Battlefield {
             const row = [];
             const tr = document.createElement('tr');
             tr.classList.add("battlefield-row");
-            tr.dataset.y =y;
+            tr.dataset.y = y;
+
             for(let x = 0; x < 10; x++){
                 const td = document.createElement('td');
                 td.classList.add("battlefield-item");
@@ -40,9 +38,29 @@ class BattlefieldView extends Battlefield {
 
                 tr.append(td);
                 row.push(td);
-            }
+                }
             table.append(tr);
-            this.cells.push[row];
+            this.cells.push(row);
+        }
+
+        for (let x = 0; x < 10; x++){
+            const cell = this.cells[0][x];
+            const marker = document.createElement("div");
+
+            marker.classList.add("marker", "marker-column");
+            marker.textContent = 'АБВГДЕЖЗИК'[x];
+
+            cell.append(marker);
+        }
+
+        for (let y = 0; y < 10; y++){
+            const cell = this.cells[y][0];
+            const marker = document.createElement("div");
+
+            marker.classList.add("marker", "marker-row");
+            marker.textContent = y + 1;
+
+            cell.append(marker);
         }
     }
 }

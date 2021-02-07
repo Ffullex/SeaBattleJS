@@ -3,6 +3,8 @@ class Application {
     player = null;
     opponent = null;
 
+
+
     constructor() {
         const player = new BattlefieldView();
         const opponent = new BattlefieldView();
