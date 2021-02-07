@@ -31,6 +31,7 @@ body {
     color: #02025c;
 }
 
+/*Поле боя*/
 .battlefield {
     position: relative;
 }
@@ -45,6 +46,8 @@ body {
     height: 32px;
     border: 1px solid rgba(6, 25, 247, 0.15);
 }
+
+/*Маркеры*/
 .marker {
     position: absolute;
     top: 0;
@@ -56,7 +59,6 @@ body {
     justify-content: center;
     text-align: center;
 }
-
 .marker-row {
     left: -35px;
 }
@@ -64,6 +66,7 @@ body {
     top: -35px;
 }
 
+/*Корабли*/
 .ship {
     position: absolute;
     top: 0;

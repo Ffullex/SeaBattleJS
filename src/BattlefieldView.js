@@ -63,4 +63,21 @@ class BattlefieldView extends Battlefield {
             cell.append(marker);
         }
     }
+
+    // добавляет визуализацию кораблей
+    addShip(ship) {
+        if(!super.addShip(ship)){
+            return false;
+        }
+
+        this.dock.append(ship.div);
+
+        if(ship.placed){
+        }else{
+            ship.div.style.left = `${ship.startX}px`;
+            ship.div.style.top = `${ship.startY}px`;
+        }
+
+        return true;
+    }
 }
