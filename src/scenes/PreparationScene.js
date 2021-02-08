@@ -17,19 +17,15 @@ class PreparationScene extends Scene {
     draggedOffSetX = 0;
     draggedOffSetY = 0;
 
+    removeEventListeners = [];
+
     // Расстановка вручную
     init() {
-        this.randomize = this.randomize.bind(this);
-        this.manually = this.manually.bind(this);
-
         this.manually();
     }
     start() {
+        this.removeEventListeners = [];
 
-/*        player.ships[0].x = 1;
-        player.ships[0].y = 1;
-        console.log(player.matrix);
-        console.log(player);*/
         document
             .querySelectorAll(".app-actions")
             .forEach((element) => element.classList.add("hidden"));
@@ -39,15 +35,41 @@ class PreparationScene extends Scene {
             .classList.remove("hidden");
 
         const randomizeButton = document.querySelector('[data-action="randomize"]');
-        randomizeButton.addEventListener('click',  this.randomize);
-
         const manuallyButton = document.querySelector('[data-action="manually"]');
-        manuallyButton.addEventListener('click',  this.manually);
+        const simpleButton = document.querySelector('[data-computer="simple"]');
+        const middleButton = document.querySelector('[data-computer="middle"]');
+        const hardButton = document.querySelector('[data-computer="hard"]');
+
+        this.removeEventListeners.push(addEventListener(manuallyButton, 'click', () =>
+            this.randomize())
+        );
+        this.removeEventListeners.push(addEventListener(randomizeButton, 'click', () =>
+            this.manually())
+        );
+
+        this.removeEventListeners.push(
+            addEventListener(simpleButton, 'click', () =>
+            this.startComputer('simple')
+            )
+        );
+        this.removeEventListeners.push(
+            addEventListener(middleButton, 'click', () =>
+                this.startComputer('middle')
+            )
+        );
+        this.removeEventListeners.push(
+            addEventListener(hardButton, 'click', () =>
+                this.startComputer('hard')
+            )
+        );
     }
 
     stop(){
-        const randomizeButton = document.querySelector('[data-action="randomize"]');
-        randomizeButton.removeEventListener('click', this.randomize);
+        for (const removeEventListener of this.removeEventListeners) {
+            removeEventListener();
+        }
+
+        this.removeEventListeners = [];
     }
 
 
@@ -115,6 +137,17 @@ class PreparationScene extends Scene {
         if(this.draggedShip && mouse.delta){
             this.draggedShip.toggleDirection();
         }
+
+        // активация пунктов выбора сложности при заполнении поля боя
+        if(player.complete){
+            document.querySelector('[data-computer="simple"]').disabled = false;
+            document.querySelector('[data-computer="middle"]').disabled = false;
+            document.querySelector('[data-computer="hard"]').disabled = false;
+        }else {
+            document.querySelector('[data-computer="simple"]').disabled = true;
+            document.querySelector('[data-computer="middle"]').disabled = true;
+            document.querySelector('[data-computer="hard"]').disabled = true;
+        }
     }
 
     // расстановка случайно
@@ -141,5 +174,9 @@ class PreparationScene extends Scene {
         }
 
 
+    }
+
+    startComputer(level){
+        console.log(level);
     }
 }

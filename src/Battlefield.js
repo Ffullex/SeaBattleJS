@@ -67,7 +67,22 @@
         return this.#matrix
     }
 
-    // проверка координат
+    // Проверка расстановки кораблей и готовности к бою
+    get complete(){
+        if(this.ships.length !== 10){
+            return false;
+        }
+
+        for (const ship of this.ships){
+            if(!ship.placed){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // проверка координат относительно поля боя
     inField(x, y){
         const isNumber = n =>
             parseInt(n) === n && !isNaN(n) && ![Infinity, -Infinity].includes(n);
