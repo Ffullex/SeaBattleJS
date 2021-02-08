@@ -59,7 +59,18 @@ class PreparationScene extends Scene {
 
         // Бросание
         if(!mouse.left && this.draggedShip){
+            const ship = this.draggedShip;
             this.draggedShip = null;
+
+            const { left, top } = ship.div.getBoundingRect();
+            const { width, height } = player.cells[0][0].getBoundingRect();
+            const point = {
+                x: left + width/2,
+                y: top + height/2,
+            };
+
+            const cell = player.cells.flat().find(cell => isUnderPoint(point));
+            console.log(cell);
         }
 
         // Вращение

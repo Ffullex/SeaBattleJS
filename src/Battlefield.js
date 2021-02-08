@@ -86,7 +86,7 @@
 
 
     // метод добавления кораблей, который срабатывает, если этот корабль не был добавлен ранее
-    addShip(ship){
+    addShip(ship, x, y){
         if(this.ships.includes(ship)){
             return false;
         }
@@ -94,7 +94,7 @@
         this.ships.push(ship);
 
         if(this.inField(x, y)){
-            const {x, y} = ship;
+            const { x, y } = ship;
             const dx = ship.direction === "row"
             const dy = ship.direction === "column"
 
