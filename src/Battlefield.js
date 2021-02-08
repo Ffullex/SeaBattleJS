@@ -167,7 +167,7 @@
     }
 
     //Размещение кораблей случайным образом
-        randomize(ShipClass = Ship) {
+        randomize(ShipClass = ship) {
             this.removeAllShips();
 
             for (let size = 4; size >= 1; size--) {

@@ -17,32 +17,40 @@ class PreparationScene extends Scene {
     draggedOffSetX = 0;
     draggedOffSetY = 0;
 
+    // Расстановка вручную
     init() {
-        super.init();
-        const { player } = this.app;
+        this.randomize = this.randomize.bind(this);
+        this.manually = this.manually.bind(this);
 
-        player.removeAllShips();
-
-        for (const { size, direction, startX, startY } of shipDatas) {
-            const ship = new ShipView(size, direction, startX, startY);
-            player.addShip(ship);
-        }
-
+        this.manually();
     }
     start() {
-        const {player} = this.app;
-        player.ships[0].x = 1;
+
+/*        player.ships[0].x = 1;
         player.ships[0].y = 1;
         console.log(player.matrix);
-        console.log(player);
-        player.randomize(ShipView);
+        console.log(player);*/
+        document
+            .querySelectorAll(".app-actions")
+            .forEach((element) => element.classList.add("hidden"));
 
-        for ( let i = 0; i < 10; i++ ){
-            const ship = player.ships[i];
-            ship.startX = shipDatas[i].startX;
-            ship.startY = shipDatas[i].startY;
-        }
+        document
+            .querySelector('[data-scene="preparation"]')
+            .classList.remove("hidden");
+
+        const randomizeButton = document.querySelector('[data-action="randomize"]');
+        randomizeButton.addEventListener('click',  this.randomize);
+
+        const manuallyButton = document.querySelector('[data-action="manually"]');
+        manuallyButton.addEventListener('click',  this.manually);
     }
+
+    stop(){
+        const randomizeButton = document.querySelector('[data-action="randomize"]');
+        randomizeButton.removeEventListener('click', this.randomize);
+    }
+
+
     update()  {
         const {mouse, player} = this.app;
 
@@ -108,7 +116,30 @@ class PreparationScene extends Scene {
             this.draggedShip.toggleDirection();
         }
     }
-    stop() {
-        console.log("Preparation stop");
+
+    // расстановка случайно
+    randomize(){
+        const {player} = this.app;
+        player.randomize(ShipView);
+
+        for ( let i = 0; i < 10; i++ ){
+            const ship = player.ships[i];
+            ship.startX = shipDatas[i].startX;
+            ship.startY = shipDatas[i].startY;
+        }
+    }
+
+    // расстановка вручную
+    manually(){
+        const { player } = this.app;
+
+        player.removeAllShips();
+
+        for (const { size, direction, startX, startY } of shipDatas) {
+            const ship = new ShipView(size, direction, startX, startY);
+            player.addShip(ship);
+        }
+
+
     }
 }
