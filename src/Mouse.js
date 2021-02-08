@@ -29,20 +29,22 @@ class Mouse {
 
         element.addEventListener("mousemove", (e) => {
             this.tick();
-
             update(e);
         });
+
         element.addEventListener("mouseenter", (e) => {
             this.tick();
 
             update(e);
         });
+
         element.addEventListener("mouseleave", (e) => {
             this.tick();
 
             update(e);
             this.under = false;
         });
+
         element.addEventListener("mousedown", (e) => {
             this.tick();
 
@@ -52,26 +54,23 @@ class Mouse {
                 this.left = true;
             }
         });
+
         element.addEventListener("mouseup", e => {
             this.tick();
+            update(e);
 
-            this.x = e.clientX;
-            this.y = e.clientY;
-            this.delta = 0;
-            this.under = true;
-            if (e.button === 0){
+            if (e.button === 0) {
                 this.left = false;
             }
         });
+
         element.addEventListener('wheel', e => {
             this.tick();
 
             this.x = e.clientX;
             this.y = e.clientY;
+            this.delta = e.deltaY > 0 ? 1 : -1;
             this.under = true;
-            if (e.button === 0){
-                this.delta = e.deltaY > 0 ? 1 : -1;
-            }
         });
     }
 

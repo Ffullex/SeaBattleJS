@@ -11,26 +11,27 @@ class ShipView extends ship {
         const div = document.createElement("div");
         div.classList.add("ship");
 
-        Object.assign(this, {div, startX, startY});
+        Object.assign(this, { div, startX, startY });
 
         this.setDirection(direction, true);
     }
+
     // Расположение кораблей в доке
-    setDirection(newDirection, force = false){
+    setDirection(newDirection, force = false) {
         if (!force && this.direction === newDirection) {
             return false;
         }
 
-        this.div.classList.remove(`ship-${this.direction}-${this.size}`)
-        this.direction = newDirection
-        this.div.classList.add(`ship-${this.direction}-${this.size}`)
+        this.div.classList.remove(`ship-${this.direction}-${this.size}`);
+        this.direction = newDirection;
+        this.div.classList.add(`ship-${this.direction}-${this.size}`);
 
-        return true
+        return true;
     }
 
     toggleDirection(){
         const newDirection = this.direction === "row" ? "column" : "row";
-        this.setDirection(newDirection)
+        this.setDirection(newDirection);
     }
 
     isUnder(point){

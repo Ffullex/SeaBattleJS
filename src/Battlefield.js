@@ -6,23 +6,27 @@
     #matrix = null;
     #changed = true;
 
-    get matrix(){
-        if(!this.#changed){
-            this.matrix;
+    get matrix() {
+        if (!this.#changed) {
+            this.#matrix;
         }
 
         const matrix = [];
-        for (let y = 0; y < 10; y++){
+
+        for (let y = 0; y < 10; y++) {
             const row = [];
-            for (let x = 0; x < 10; x++){
+
+            for (let x = 0; x < 10; x++) {
                 const item = {
                     x,
                     y,
                     ship: null,
+                    free: true,
                 };
 
                 row.push(item);
             }
+
             matrix.push(row);
         }
 
@@ -31,20 +35,22 @@
             if(!ship.placed){
                 continue;
             }
-            const {x, y} = ship;
-            const dx = ship.direction === "row"
-            const dy = ship.direction === "column"
+
+            const { x, y } = ship;
+            const dx = ship.direction === "row";
+            const dy = ship.direction === "column";
 
             // (true * 10 = 10, false * 10 = 0)
             for(let i = 0; i < ship.size; i++){
                 const cx = x + dx * i;
                 const cy = y + dy * i;
-                const item = matrix[cy][cx]
+
+                const item = matrix[cy][cx];
                 item.ship = ship;
             }
 
             // Проверка поля вокруг корабля, где нельзя ставить другие корабли
-            for(let y = ship.y - 1; y <= ship.y + ship.size * dy + 1; y++){
+            for(let y = ship.y - 1; y < ship.y + ship.size * dy + dx + 1; y++){
                 for( let x = ship.x - 1; x < ship.x + ship.size * dx + dy + 1; x++){
                     console.log(x, y, this.inField(x, y))
                     if(this.inField(x, y)){
@@ -53,18 +59,6 @@
                     }
                 }
             }
-
-/*            if (ship.direction === "row"){
-                for (let y = ship.y - 1; y < ship.y + 2; y++){
-                        for ( let x = ship.x - 1; x < ship.x + ship.size + 1; x++){
-                    }
-                }
-            }else {
-                for (let y = ship.y - 1; y < ship.y + 1; y++) {
-                    for (let x = ship.x - 1; x < ship.x + ship.size + 1; x++) {
-                    }
-                }
-            }*/
         }
 
         this.#matrix = matrix;
@@ -76,8 +70,9 @@
     // проверка координат
     inField(x, y){
         const isNumber = n =>
-           !( parseInt(n) === n && !isNaN(n) && [Infinity, -Infinity].includes(n));
-        if(!isNumber(x) && !isNumber(y)){
+            parseInt(n) === n && !isNaN(n) && ![Infinity, -Infinity].includes(n);
+
+        if(!isNumber(x) || !isNumber(y)){
             return false;
         }
 
@@ -94,26 +89,28 @@
         this.ships.push(ship);
 
         if(this.inField(x, y)){
-            const { x, y } = ship;
+
             const dx = ship.direction === "row"
             const dy = ship.direction === "column"
+
+            let placed = true;
 
             for(let i = 0; i < ship.size; i++){
                 const cx = x + dx * i;
                 const cy = y + dy * i;
-                let placed = true;
 
-                if(!this.inField(x, y)) {
+                if(!this.inField(cx, cy)) {
                     placed = false;
                     break;
                 }
 
-                const item = matrix[cy][cx]
+                const item = this.matrix[cy][cx]
                 if(!item.free){
                     placed = false;
                     break;
                 }
             }
+
             if(placed){
                 Object.assign(ship, {x, y});
             }
@@ -132,13 +129,16 @@
         const index = this.ships.indexOf(ship)
         this.ships.splice(index, 1);
 
+        ship.x = null;
+        ship.y = null;
+
         this.#changed = true;
         return true;
     }
 
     // Пробегаемся по массиву кораблей, удаляем все, возвращаем количество удалённых кораблей
     removeAllShips(){
-        const ships = this.ships.slice()
+        const ships = this.ships.slice();
 
         for (const ship of ships){
             this.removeShip(ship);
@@ -160,9 +160,26 @@
         const shots = this.shots.slice()
 
         for (const shot of shots){
-            this.removeShip(shot);
+            this.removeShot(shot);
         }
 
         return shots.length;
+    }
+
+    randomize() {
+        this.removeAllShips();
+
+        for (let size = 4; size >=1; size--){
+            for (let n = 0; n < 5 - size; n++){
+                // console.log(size);
+                const direction = getRandomFrom("row", "column");
+                const ship = new Ship(size, direction);
+
+                while(!ship.placed){
+                    const x = getRandomBeetween(0, 9);
+                    const y = getRandomBeetween(0, 9);
+                }
+            }
+        }
     }
 }

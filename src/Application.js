@@ -23,22 +23,23 @@ class Application {
         // Преобазуем в формат entries, чтобы иметь возможность обращаться как к массиву
         // {preparation: PreparationScene,} -> {['preparation', PreparationScene]}
         // То есть, регистрируем сцены из конструктора в банк
-        for(const [sceneName, SceneClass] of Object.entries(scenes)){
+        for (const [sceneName, SceneClass] of Object.entries(scenes)) {
             this.scenes[sceneName] = new SceneClass(sceneName, this);
         }
 
         // Собрать с объекта значения
-        for(const scene of Object.values(this.scenes)){
+        for (const scene of Object.values(this.scenes)) {
             scene.init();
         }
-        requestAnimationFrame(()=>this.tick());
+
+        requestAnimationFrame(() => this.tick());
     }
 
     // В том числе задаём обновление сцены с частотой обновления экрана
-    tick () {
+    tick() {
         requestAnimationFrame(() => this.tick());
 
-        if(this.activeScene){
+        if (this.activeScene) {
             this.activeScene.update();
         }
 
@@ -48,17 +49,17 @@ class Application {
     // Несколько проверок и запуск сцены.
     start (sceneName) {
         // Если есть активная сцена и имя совпадает с той, которую нужно запустить
-        if(this.activeScene && this.activeScene.name === sceneName){
+        if (this.activeScene && this.activeScene.name === sceneName) {
             return false;
         }
 
         // Если нет заранее подготовленной сцены (нельзя запустить такую, которой нет)
-        if(!this.scenes.hasOwnProperty(sceneName)){
+        if (!this.scenes.hasOwnProperty(sceneName)) {
             return false;
         }
 
         // Если есть текущая активная сцена, её нужно остановить
-        if(this.activeScene){
+        if (this.activeScene) {
             this.activeScene.stop();
         }
 
