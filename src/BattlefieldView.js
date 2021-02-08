@@ -80,4 +80,8 @@ class BattlefieldView extends Battlefield {
 
         return true;
     }
+
+    isUnder(point){
+        return isUnderPoint(point, this.root);
+    }
 }
