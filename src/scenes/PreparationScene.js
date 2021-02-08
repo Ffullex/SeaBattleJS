@@ -41,10 +41,10 @@ class PreparationScene extends Scene {
         const hardButton = document.querySelector('[data-computer="hard"]');
 
         this.removeEventListeners.push(addEventListener(manuallyButton, 'click', () =>
-            this.randomize())
+            this.manually())
         );
         this.removeEventListeners.push(addEventListener(randomizeButton, 'click', () =>
-            this.manually())
+            this.randomize())
         );
 
         this.removeEventListeners.push(
@@ -52,11 +52,13 @@ class PreparationScene extends Scene {
             this.startComputer('simple')
             )
         );
+
         this.removeEventListeners.push(
             addEventListener(middleButton, 'click', () =>
                 this.startComputer('middle')
             )
         );
+
         this.removeEventListeners.push(
             addEventListener(hardButton, 'click', () =>
                 this.startComputer('hard')
@@ -176,7 +178,9 @@ class PreparationScene extends Scene {
 
     }
 
+    // заканчивается подготовка, отключается функциональность меню, начинается игра с компьютером
     startComputer(level){
         console.log(level);
+        this.app.start("computer");
     }
 }
