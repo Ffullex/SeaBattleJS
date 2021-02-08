@@ -36,7 +36,13 @@ class PreparationScene extends Scene {
         player.ships[0].y = 1;
         console.log(player.matrix);
         console.log(player);
-        this.app.player.randomize();
+       // this.app.player.randomize(ShipView);
+
+        for ( let i = 0; i < 10; i++ ){
+            const ship = player.ships[i];
+            ship.startX = shipDatas[i].startX;
+            ship.startY = shipDatas[i].startY;
+        }
     }
     update()  {
         const {mouse, player} = this.app;
