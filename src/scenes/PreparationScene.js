@@ -31,12 +31,11 @@ class PreparationScene extends Scene {
     }
     start() {
         const {player} = this.app;
-
         player.ships[0].x = 1;
         player.ships[0].y = 1;
         console.log(player.matrix);
         console.log(player);
-       // this.app.player.randomize(ShipView);
+        player.randomize(ShipView);
 
         for ( let i = 0; i < 10; i++ ){
             const ship = player.ships[i];
@@ -55,8 +54,8 @@ class PreparationScene extends Scene {
                 const shipRect = ship.div.getBoundingClientRect();
 
                 this.draggedShip = ship;
-                this.draggedOffsetX = mouse.x - shipRect.left;
-                this.draggedOffsetY = mouse.y - shipRect.top;
+                this.draggedOffSetX = mouse.x - shipRect.left;
+                this.draggedOffSetY = mouse.y - shipRect.top;
 
                 ship.x = null;
                 ship.y = null;
@@ -66,8 +65,8 @@ class PreparationScene extends Scene {
         // Перетаскивание
         if (mouse.left && this.draggedShip) {
             const { left, top } = player.root.getBoundingClientRect();
-            const x = mouse.x - left - this.draggedOffsetX;
-            const y = mouse.y - top - this.draggedOffsetY;
+            const x = mouse.x - left - this.draggedOffSetX;
+            const y = mouse.y - top - this.draggedOffSetY;
 
             this.draggedShip.div.style.left = `${x}px`;
             this.draggedShip.div.style.top = `${y}px`;

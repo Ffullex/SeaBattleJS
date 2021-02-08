@@ -1,10 +1,10 @@
 // Возвращает случайное число из промежутка
-function getRandomBetween(min, max){
-    return min + Math.floor(Math.random()) * (max - min + 1);
+function getRandomBetween(min, max) {
+    return min + Math.floor(Math.random() * (max - min + 1));
 }
 
 // Возвращает случайное число из массива
-function getRandomFrom(...args){
+function getRandomFrom(...args) {
     const index = Math.floor(Math.random() * args.length);
     return args[index];
 }
