@@ -36,13 +36,14 @@ class PreparationScene extends Scene {
 
         const randomizeButton = document.querySelector('[data-action="randomize"]');
         const manuallyButton = document.querySelector('[data-action="manually"]');
-        const simpleButton = document.querySelector('[data-computer="simple"]');
+         const simpleButton = document.querySelector('[data-computer="simple"]');
         const middleButton = document.querySelector('[data-computer="middle"]');
         const hardButton = document.querySelector('[data-computer="hard"]');
 
         this.removeEventListeners.push(addEventListener(manuallyButton, 'click', () =>
             this.manually())
         );
+
         this.removeEventListeners.push(addEventListener(randomizeButton, 'click', () =>
             this.randomize())
         );
@@ -180,7 +181,6 @@ class PreparationScene extends Scene {
 
     // заканчивается подготовка, отключается функциональность меню, начинается игра с компьютером
     startComputer(level){
-        console.log(level);
         this.app.start("computer");
     }
 }

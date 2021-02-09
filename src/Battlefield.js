@@ -22,6 +22,7 @@
                     y,
                     ship: null,
                     free: true,
+                    wounded: false,
                 };
 
                 row.push(item);
@@ -162,8 +163,37 @@
         return ships.length;
     }
 
-    addShot(){
-        this.#changed = true;
+    // Пробегаем по кораблям, проверяя координаты, чтобы потом использовать матрицу для сравнения попал/мимо
+    addShot(shot){
+
+        for (const {x, y} of this.shots){
+            if(shot.x === shot.x && shot.y === shot.y){
+                return false; // Чтобы не стрелять по одной и той же клетке
+            }
+        }
+
+        this.shots.push(shot);
+        this.polygon.append(shot.div);
+
+        const matrix = this.matrix;
+        const {x, y} = shot;
+
+        if(matrix[y][x].ship){
+            shot.setVariant('shot-wounded');
+
+            const { ship } = matrix[y][x];
+            const dx = ship.direction === "row";
+            const dy = ship.direction === "column";
+
+            let killed = true;
+
+            for( let i = 0; i < ship.size; i++){
+                const cx = ship.x + dx * i;
+                const cy = ship.x + dx * i;
+
+                if(matrix[y][x]) {};
+            }
+        }
     }
 
     removeShot(){

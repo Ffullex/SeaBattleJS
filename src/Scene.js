@@ -1,6 +1,7 @@
 class Scene {
-    name = null;
     app = null;
+    name = null;
+
 
     constructor(name, app) {
     Object.assign(this, { name, app })
