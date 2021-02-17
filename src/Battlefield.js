@@ -6,6 +6,15 @@
     #matrix = null;
     #changed = true;
 
+    get loser(){
+        for (const ship of this.ships){
+            if(!ship.killed){
+                return false;
+            }
+        }
+        return true;
+    }
+
     get matrix() {
         if (!this.#changed) {
             this.#matrix;
@@ -103,7 +112,6 @@
 
         return 0 <= x && x < 10 && 0 <= y && y < 10;
     }
-
 
     // метод добавления кораблей, который срабатывает, если этот корабль не был добавлен ранее
     addShip(ship, x, y){

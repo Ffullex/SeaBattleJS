@@ -47,7 +47,7 @@ class Application {
     }
 
     // Несколько проверок и запуск сцены.
-    start (sceneName) {
+    start (sceneName, ...args) {
         // Если есть активная сцена и имя совпадает с той, которую нужно запустить
         if (this.activeScene && this.activeScene.name === sceneName) {
             return false;
@@ -66,7 +66,7 @@ class Application {
         // Выбор сцены, которую нужно запустить и её запуск.
         const scene = this.scenes[sceneName];
         this.activeScene = scene;
-        scene.start();
+        scene.start(...args);
 
         return true;
     }
