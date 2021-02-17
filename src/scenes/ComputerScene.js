@@ -29,4 +29,9 @@ class ComputerScene extends Scene {
             }
         }
     }
+
+/*    clear(){
+        this.removeAllShips();
+        this.removeAllShots();
+    }*/
 }

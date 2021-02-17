@@ -115,6 +115,7 @@ body {
 
 
 .shot {
+    border: 1px solid rgba(0, 0, 0, 0);
     width: 32px;
     height: 32px;
     text-align: center;
@@ -124,7 +125,6 @@ body {
     justify-content: center;
 }
 .shot-missed {
-    /* color: gray; */
     color: black;
 }
 .shot-wounded {

@@ -36,7 +36,7 @@ class PreparationScene extends Scene {
 
         const randomizeButton = document.querySelector('[data-action="randomize"]');
         const manuallyButton = document.querySelector('[data-action="manually"]');
-         const simpleButton = document.querySelector('[data-computer="simple"]');
+        const simpleButton = document.querySelector('[data-computer="simple"]');
         const middleButton = document.querySelector('[data-computer="middle"]');
         const hardButton = document.querySelector('[data-computer="hard"]');
 
@@ -146,7 +146,7 @@ class PreparationScene extends Scene {
             document.querySelector('[data-computer="simple"]').disabled = false;
             document.querySelector('[data-computer="middle"]').disabled = false;
             document.querySelector('[data-computer="hard"]').disabled = false;
-        }else {
+        } else {
             document.querySelector('[data-computer="simple"]').disabled = true;
             document.querySelector('[data-computer="middle"]').disabled = true;
             document.querySelector('[data-computer="hard"]').disabled = true;

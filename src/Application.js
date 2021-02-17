@@ -71,7 +71,3 @@ class Application {
         return true;
     }
 }
-
-
-
-

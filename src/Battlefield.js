@@ -22,6 +22,8 @@
                     y,
                     ship: null,
                     free: true,
+
+                    shooted: false,
                     wounded: false,
                 };
 
@@ -32,8 +34,8 @@
         }
 
         // Автоматическая постановка корабля при отпускании ЛКМ
-        for (const ship of this.ships){
-            if(!ship.placed){
+        for (const ship of this.ships) {
+            if (!ship.placed) {
                 continue;
             }
 
@@ -53,12 +55,20 @@
             // Проверка поля вокруг корабля, где нельзя ставить другие корабли
             for(let y = ship.y - 1; y < ship.y + ship.size * dy + dx + 1; y++){
                 for( let x = ship.x - 1; x < ship.x + ship.size * dx + dy + 1; x++){
-                    console.log(x, y, this.inField(x, y))
+                    //  console.log(x, y, this.inField(x, y))
                     if(this.inField(x, y)){
                         const item = matrix[y][x];
                         item.free = false;
                     }
                 }
+            }
+        }
+        for(const { x,y } of this.shots){
+            const item = matrix[y][x]
+            item.shooted = true;
+
+            if(item.ship){
+                item.wounded = true;
             }
         }
 
@@ -74,12 +84,11 @@
             return false;
         }
 
-        for (const ship of this.ships){
-            if(!ship.placed){
+        for (const ship of this.ships) {
+            if (!ship.placed) {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -165,21 +174,21 @@
 
     // Пробегаем по кораблям, проверяя координаты, чтобы потом использовать матрицу для сравнения попал/мимо
     addShot(shot){
-
         for (const {x, y} of this.shots){
-            if(shot.x === shot.x && shot.y === shot.y){
+            if(x === shot.x && y === shot.y){
                 return false; // Чтобы не стрелять по одной и той же клетке
             }
         }
 
         this.shots.push(shot);
-        this.polygon.append(shot.div);
+
+        this.#changed = true;
 
         const matrix = this.matrix;
         const {x, y} = shot;
 
         if(matrix[y][x].ship){
-            shot.setVariant('shot-wounded');
+            shot.setVariant('wounded');
 
             const { ship } = matrix[y][x];
             const dx = ship.direction === "row";
@@ -187,13 +196,24 @@
 
             let killed = true;
 
+            // Перебираем клетки корабля, если есть, то не killed
             for( let i = 0; i < ship.size; i++){
                 const cx = ship.x + dx * i;
-                const cy = ship.x + dx * i;
+                const cy = ship.y + dy * i;
+                const item  = matrix[cy][cx]
 
-                if(matrix[y][x]) {};
+                if(!item.wounded) {
+                    killed = false;
+                    break;
+                }
+            }
+            if(killed){
+                ship.killed = true;
+                shot.setVariant('killed');
             }
         }
+        this.#changed = true;
+        return true;
     }
 
     removeShot(){
