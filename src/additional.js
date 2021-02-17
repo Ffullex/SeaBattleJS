@@ -22,3 +22,25 @@ function addEventListener(element, ...args) {
     element.addEventListener(...args);
     return () => element.removeEventListener(...args);
 }
+
+// забор элементов из массива
+function getSeveralRandom(array, size){
+    array = array.slice();
+    if( size > array.length){
+        size = array.length;
+    }
+
+    const result = [];
+    while (result.length < size){
+        const index = Math.floor(Math.random() * array.length);
+        const item = array.splice(index, 1) [0];
+        result.push(item);
+    }
+/*    const indexes = Array(array.lenght).fill().map((_, i) => i)
+
+    while (result.lenght !== size){
+        const
+    }*/
+
+    return result;
+}

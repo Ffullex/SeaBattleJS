@@ -6,5 +6,7 @@ const app = new Application({
 app.start("preparation");
 
 document.querySelector('[ data-action="randomize"]').click();
+// автозапуск среднего компа.
+/*
 document.querySelector('[ data-computer="middle"]').disabled = false;
-document.querySelector('[ data-computer="middle"]').click();
+document.querySelector('[ data-computer="middle"]').click();*/

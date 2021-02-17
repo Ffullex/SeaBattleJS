@@ -181,6 +181,16 @@ class PreparationScene extends Scene {
 
     // заканчивается подготовка, отключается функциональность меню, начинается игра с компьютером
     startComputer(level){
+        // Проверяем клетки без корабля и сохраняем в массив
+        const matrix = this.app.player.matrix;
+        const withoutShipItems = matrix.flat().filter((item) => !item.ship);
+        let untouchables = [];
+
+        if (level === 'simple'){}
+        if (level === 'middle'){
+            untouchables = getSeveralRandom()
+        }
+        if (level === 'simple'){}
         this.app.start("computer");
     }
 }

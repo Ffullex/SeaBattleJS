@@ -11,8 +11,8 @@ class Application {
 
     constructor(scenes) {
         const mouse = new Mouse(document.body);
-        const player = new BattlefieldView();
-        const opponent = new BattlefieldView();
+        const player = new BattlefieldView(true);
+        const opponent = new BattlefieldView(false);// false добавляет невидимость. Смотри в BatllefieldView
 
         Object.assign(this, { mouse, player, opponent });
 

@@ -209,15 +209,30 @@
             }
             if(killed){
                 ship.killed = true;
-                shot.setVariant('killed');
+                for( let i = 0; i < ship.size; i++) {
+                    const cx = ship.x + dx * i;
+                    const cy = ship.y + dy * i;
+
+                    const shot = this.shots.find(shot => shot.x === cx && shot.y === cy)
+                    shot.setVariant('killed');
+                }
+
             }
         }
         this.#changed = true;
         return true;
     }
 
-    removeShot(){
+    removeShot(shot){
+        if(!this.shots.includes(shot)){
+            return false;
+        }
+
+        const index = this.shots.indexOf(shot);
+        this.shots.splice(index, 1);
+
         this.#changed = true;
+        return true;
     }
 
     // Пробегаемся по массиву выстрелов, удаляем их из массива, возвращаем количество удалённых выстрелов
@@ -232,22 +247,27 @@
     }
 
     //Размещение кораблей случайным образом
-        randomize(ShipClass = ship) {
-            this.removeAllShips();
+    randomize(ShipClass = ship) {
+        this.removeAllShips();
 
-            for (let size = 4; size >= 1; size--) {
-                for (let n = 0; n < 5 - size; n++) {
-                    const direction = getRandomFrom("row", "column");
-                    const ship = new ShipClass(size, direction);
+        for (let size = 4; size >= 1; size--) {
+            for (let n = 0; n < 5 - size; n++) {
+                const direction = getRandomFrom("row", "column");
+                const ship = new ShipClass(size, direction);
 
-                    while (!ship.placed) {
-                        const x = getRandomBetween(0, 9);
-                        const y = getRandomBetween(0, 9);
+                while (!ship.placed) {
+                    const x = getRandomBetween(0, 9);
+                    const y = getRandomBetween(0, 9);
 
-                        this.removeShip(ship);
-                        this.addShip(ship, x, y);
-                    }
+                    this.removeShip(ship);
+                    this.addShip(ship, x, y);
                 }
             }
         }
+    }
+
+    clear(){
+        this.removeAllShots();
+        this.removeAllShips();
+    }
 }
